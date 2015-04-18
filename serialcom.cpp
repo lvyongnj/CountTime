@@ -1,9 +1,8 @@
-#include "querytime.h"
+#include "serialcom.h"
 
-querytime::querytime(QObject *parent) : QObject(parent)
+serialCom::serialCom()
 {
     comport = new QSerialPort();
-    isOpen = 0;
 
     command[0]=0x54;
     command[1]=0x58;
@@ -26,12 +25,14 @@ querytime::querytime(QObject *parent) : QObject(parent)
     command[18]=0x40;
 }
 
-querytime::~querytime()
+serialCom::~serialCom()
 {
     delete comport;
+    comport->clear();
+    comport->close();
 }
 
-bool querytime::openCom() {
+bool serialCom::openCom() {
     if (comport->isOpen()) {
         return true;
     }
@@ -44,13 +45,15 @@ bool querytime::openCom() {
         comport->setPortName(info.portName());
         comport->open(QIODevice::ReadWrite);
         comport->write(command, 19);
+        rcvData.clear();
         while (comport->waitForReadyRead(100))
              rcvData.append(comport->readAll());
         if(!strncmp("run.log", rcvData.data(), 7)){
             flag = 1;
-            isOpen = true;
             break;
         }
+        else
+            comport->close();
     }
     if(flag == 0)
         return false;
@@ -58,17 +61,16 @@ bool querytime::openCom() {
         return true;
 }
 
-bool querytime::writeToCom(short block)
+bool serialCom::writeToCom(short block)
 {
     rcvData.clear();
     command[18] = 0x40+block;
-    openCom();
     comport->write(command, 19);
 
     return true;
 }
 
-bool querytime::readFromCom()
+bool serialCom::readFromCom()
 {
     qDebug() << "Brush:" <<"send data success";
 
@@ -77,7 +79,3 @@ bool querytime::readFromCom()
 
     return true;
 }
-
-
-
-

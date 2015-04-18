@@ -1,10 +1,9 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2015-04-10T10:40:00
+# Project created by QtCreator 2015-04-14T10:08:07
 #
 #-------------------------------------------------
 QT       += core gui serialport
-QT += serialport
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -14,8 +13,15 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        maincount.cpp \
-    querytime.cpp
+    window.cpp \
+    currenttime.cpp \
+    historyTime.cpp \
+    serialcom.cpp \
+    doCount.cpp
 
-HEADERS  += maincount.h \
-    querytime.h
+HEADERS  += \
+    window.h \
+    currenttime.h \
+    historyTime.h \
+    serialcom.h \
+    doCount.h
