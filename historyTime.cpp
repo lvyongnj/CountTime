@@ -118,6 +118,7 @@ bool historyTime::his()
         fwrite("\n", 1, 1, file);
         fclose(file);
     }
+    return true;
 }
 
 oneRecord *historyTime::getRecords()

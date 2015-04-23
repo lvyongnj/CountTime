@@ -1,7 +1,6 @@
 #ifndef SERIALCOM_H
 #define SERIALCOM_H
 
-#include <QtDebug>
 #include <QtSerialPort/QtSerialPort>
 #include <windows.h>
 #include <stdio.h>

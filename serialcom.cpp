@@ -2,7 +2,7 @@
 
 serialCom::serialCom()
 {
-    comport = new QSerialPort();
+    comport = new QSerialPort;
 
     command[0]=0x54;
     command[1]=0x58;
